@@ -4,12 +4,13 @@
 
 # Environment variables (contains secrets, passwords, API keys)
 .env
-.env.*
 .env.local
 .env.production
 .env.development
 .env.test
 *.env
+# BUT allow .env.example (template without secrets)
+!.env.example
 
 # Database credentials and backups
 database/db.js
