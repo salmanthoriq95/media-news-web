@@ -1,0 +1,40 @@
+{
+  "name": "media-promote-smk-web-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "migrate": "knex migrate:latest",
+    "migrate:rollback": "knex migrate:rollback",
+    "migrate:make": "knex migrate:make",
+    "seed": "knex seed:run",
+    "seed:make": "knex seed:make"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nuxtjs/tailwindcss": "^6.14.0",
+    "bcrypt": "^6.0.0",
+    "connect-session-knex": "^5.0.0",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express-rate-limit": "^8.2.1",
+    "express-session": "^1.18.2",
+    "hashids": "^2.3.0",
+    "helmet": "^8.1.0",
+    "joi": "^18.0.2",
+    "knex": "^3.1.0",
+    "multer": "^2.0.2",
+    "mysql2": "^3.15.3",
+    "nodemailer": "^7.0.11",
+    "nuxt": "^4.2.2",
+    "validator": "^13.15.23",
+    "vue": "^3.5.25",
+    "xss-clean": "^0.1.4"
+  }
+}
