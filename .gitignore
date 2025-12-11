@@ -1,0 +1,287 @@
+# ============================================
+# SENSITIVE DATA - NEVER COMMIT THESE!
+# ============================================
+
+# Environment variables (contains secrets, passwords, API keys)
+.env
+.env.*
+.env.local
+.env.production
+.env.development
+.env.test
+*.env
+
+# Database credentials and backups
+database/db.js
+*.sql
+*.sqlite
+*.sqlite3
+*.db
+
+# SSL certificates and private keys
+*.pem
+*.key
+*.crt
+*.cert
+*.pfx
+*.p12
+
+# Session data (may contain user tokens)
+sessions/
+*.session
+
+# User uploaded files (may contain sensitive documents)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Backup files (may contain sensitive data)
+*.backup
+*.bak
+*.old
+*.orig
+backup/
+backups/
+
+# Credentials files
+credentials.json
+secrets.json
+config.secret.js
+
+# ============================================
+# NODE.JS / NPM
+# ============================================
+
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# Package manager lock files (optional - some teams commit these)
+# Uncomment if you want to ignore lock files:
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml
+
+# ============================================
+# NUXT.JS / VUE.JS
+# ============================================
+
+# Nuxt build output
+.nuxt
+.output
+dist/
+.nitro/
+.cache/
+
+# Nuxt generate
+.nuxt/dist/
+
+# Static files generated
+.vercel
+.netlify
+.firebase/
+
+# ============================================
+# LOGS
+# ============================================
+
+# All log files
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# Runtime logs
+combined.log
+error.log
+access.log
+
+# ============================================
+# OPERATING SYSTEM FILES
+# ============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============================================
+# IDE / EDITOR FILES
+# ============================================
+
+# Visual Studio Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# JetBrains IDEs (WebStorm, IntelliJ, etc.)
+.idea/
+*.iml
+*.iws
+*.ipr
+.idea_modules/
+atlassian-ide-plugin.xml
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# Vim
+*.swp
+*.swo
+*~
+.netrwhist
+
+# Emacs
+*~
+\#*\#
+.\#*
+
+# ============================================
+# TESTING & COVERAGE
+# ============================================
+
+# Test coverage
+coverage/
+*.lcov
+.nyc_output/
+*.coverage
+htmlcov/
+
+# Jest
+jest-results/
+
+# Cypress
+cypress/videos/
+cypress/screenshots/
+
+# ============================================
+# TEMPORARY FILES
+# ============================================
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Cache
+.cache/
+.parcel-cache/
+.eslintcache
+.stylelintcache
+
+# ============================================
+# BUILD & COMPILED FILES
+# ============================================
+
+# Compiled files
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Compiled source
+*.pyc
+*.pyo
+
+# ============================================
+# DOCKER (if using)
+# ============================================
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# ============================================
+# MISCELLANEOUS
+# ============================================
+
+# Archives (may contain backups)
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# System files
+.Trash-*
+.nfs*
+
+# GraphQL schema cache
+schema.graphql
+
+# TypeScript cache
+*.tsbuildinfo
+
+# Optional REPL history
+.node_repl_history
+
+# yarn v2
+.yarn/cache
+.yarn/unplugged
+.yarn/build-state.yml
+.yarn/install-state.gz
+.pnp.*
+
+# ============================================
+# PROJECT SPECIFIC
+# ============================================
+
+# Keep migrations and seeds structure but not data
+# database/migrations/*.js are committed (schema)
+# database/seeds/*.js are committed (default data only)
+# But ignore any data dumps or custom seeds
+database/seeds/*_custom.js
+database/data/
+
+# Ignore generated documentation (keep source)
+docs/generated/
+
+# Ignore local configuration overrides
+*.local.js
+*.local.ts
+config.local.*
+
+# ============================================
+# SECURITY SCAN RESULTS
+# ============================================
+
+# Security scan outputs
+security-report.json
+snyk-report.html
+npm-audit.json
+SECURITY.md
