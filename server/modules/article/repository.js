@@ -16,10 +16,12 @@ export default {
           'articles.subtitle',
           'articles.content',
           'articles.image',
+          'articles.is_highlight',
           'articles.created_at',
           'articles.updated_at',
           'creator.name as created_by_name',
-          'updater.name as updated_by_name'
+          'updater.name as updated_by_name',
+          'creator.photo as author_photo'
         )
         .leftJoin('users as creator', 'articles.created_by', 'creator.user_id')
         .leftJoin('users as updater', 'articles.updated_by', 'updater.user_id')
@@ -28,6 +30,62 @@ export default {
         .offset(offset);
     } catch (error) {
       console.error('[ArticleRepository] Error in getAllArticles:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get total count of articles
+   */
+  async getArticlesCount() {
+    try {
+      const result = await db('articles').count('article_id as count').first();
+      return result.count;
+    } catch (error) {
+      console.error('[ArticleRepository] Error in getArticlesCount:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get non-highlighted articles with pagination
+   */
+  async getNonHighlightedArticles(limit = 6, offset = 0) {
+    try {
+      return await db('articles')
+        .select(
+          'articles.article_id',
+          'articles.title',
+          'articles.subtitle',
+          'articles.image',
+          'articles.is_highlight',
+          'articles.created_at',
+          'creator.name as created_by_name',
+          'creator.photo as author_photo'
+        )
+        .leftJoin('users as creator', 'articles.created_by', 'creator.user_id')
+        .where('articles.is_highlight', false)
+        .orderBy('articles.created_at', 'desc')
+        .limit(limit)
+        .offset(offset);
+    } catch (error) {
+      console.error('[ArticleRepository] Error in getNonHighlightedArticles:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get total count of non-highlighted articles
+   */
+  async getNonHighlightedArticlesCount() {
+    try {
+      const result = await db('articles')
+        .where('is_highlight', false)
+        .count('article_id as count')
+        .first();
+      return result.count;
+    } catch (error) {
+      console.error('[ArticleRepository] Error in getNonHighlightedArticlesCount:', error);
       throw error;
     }
   },
@@ -56,6 +114,32 @@ export default {
   },
 
   /**
+   * Get highlighted articles (for hero carousel)
+   */
+  async getHighlightedArticles(limit = 5) {
+    try {
+      return await db('articles')
+        .select(
+          'articles.article_id',
+          'articles.title',
+          'articles.subtitle',
+          'articles.image',
+          'articles.is_highlight',
+          'articles.created_at',
+          'creator.name as created_by_name',
+          'creator.photo as author_photo'
+        )
+        .leftJoin('users as creator', 'articles.created_by', 'creator.user_id')
+        .where('articles.is_highlight', true)
+        .orderBy('articles.created_at', 'desc')
+        .limit(limit);
+    } catch (error) {
+      console.error('[ArticleRepository] Error in getHighlightedArticles:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Get article by ID
    */
   async getArticleById(articleId) {
@@ -64,6 +148,7 @@ export default {
         .select(
           'articles.*',
           'creator.name as created_by_name',
+          'creator.photo as author_photo',
           'updater.name as updated_by_name'
         )
         .leftJoin('users as creator', 'articles.created_by', 'creator.user_id')

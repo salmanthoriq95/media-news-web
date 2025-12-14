@@ -6,13 +6,17 @@ let transporter = null;
 const getTransporter = () => {
   if (!transporter) {
     transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: parseInt(process.env.MAIL_PORT),
-      secure: false, // true for 465, false for other ports
+      host: process.env.MAIL_HOST || 'smtp.gmail.com',
+      port: parseInt(process.env.MAIL_PORT) || 587,
+      secure: false, // true for 465, false for 587 (TLS)
       auth: process.env.MAIL_USER && process.env.MAIL_PASSWORD ? {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASSWORD
-      } : undefined
+      } : undefined,
+      // Gmail specific settings
+      tls: {
+        rejectUnauthorized: false
+      }
     });
   }
   return transporter;

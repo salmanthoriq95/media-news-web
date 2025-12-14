@@ -9,7 +9,8 @@ module.exports = {
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      charset: 'utf8mb4'
+      charset: 'utf8mb4',
+      timezone: '+07:00'
     },
     migrations: {
       directory: './database/migrations',
@@ -32,7 +33,8 @@ module.exports = {
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
-      charset: 'utf8mb4'
+      charset: 'utf8mb4',
+      timezone: '+07:00'
     },
     migrations: {
       directory: './database/migrations',

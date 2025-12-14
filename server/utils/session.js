@@ -132,7 +132,7 @@ export async function setSession(event, data) {
   setCookie(event, SESSION_COOKIE_NAME, sessionId, {
     httpOnly: true, // Prevent XSS access to cookie
     secure: process.env.NODE_ENV === 'production', // HTTPS only in production
-    sameSite: 'strict', // CSRF protection (changed from lax to strict)
+    sameSite: 'lax', // CSRF protection
     maxAge: SESSION_TTL / 1000,
     path: '/'
   });

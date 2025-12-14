@@ -16,7 +16,8 @@ export const createArticleSchema = Joi.object({
     'string.min': 'Konten minimal 10 karakter',
     'any.required': 'Konten wajib diisi'
   }),
-  image: Joi.string().allow('', null).optional()
+  image: Joi.string().allow('', null).optional(),
+  is_highlight: Joi.boolean().optional().default(false)
 });
 
 export const updateArticleSchema = Joi.object({
@@ -30,5 +31,6 @@ export const updateArticleSchema = Joi.object({
   content: Joi.string().min(10).optional().messages({
     'string.min': 'Konten minimal 10 karakter'
   }),
-  image: Joi.string().allow('', null).optional()
+  image: Joi.string().allow('', null).optional(),
+  is_highlight: Joi.boolean().optional()
 });

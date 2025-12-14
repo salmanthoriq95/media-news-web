@@ -38,6 +38,7 @@ export default {
           userId: user.user_id,
           name: user.name,
           email: user.email,
+          photo: user.photo,
           isFirstLogin: user.is_first_login
         }
       };
@@ -67,6 +68,7 @@ export default {
           userId: user.user_id,
           name: user.name,
           email: user.email,
+          photo: user.photo,
           isFirstLogin: user.is_first_login
         }
       };

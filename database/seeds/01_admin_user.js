@@ -2,7 +2,10 @@ require('dotenv').config();
 const bcrypt = require('bcrypt');
 
 exports.seed = async function(knex) {
-  // Deletes ALL existing entries
+  // Delete articles first (foreign key constraint)
+  await knex('articles').del();
+
+  // Then delete all users
   await knex('users').del();
 
   // Hash password with bcrypt

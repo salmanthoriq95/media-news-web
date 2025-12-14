@@ -52,6 +52,97 @@ export default {
   },
 
   /**
+   * Get articles with pagination
+   */
+  async getArticlesPaginated(page = 1, limit = 6) {
+    try {
+      const offset = (page - 1) * limit;
+
+      // Get articles and total count
+      const [articles, totalCount] = await Promise.all([
+        articleRepository.getAllArticles(limit, offset),
+        articleRepository.getArticlesCount()
+      ]);
+
+      // Encode article_id to hashid
+      const articlesWithHashId = articles.map(article => ({
+        ...article,
+        id: encode(article.article_id)
+      }));
+
+      return {
+        data: articlesWithHashId,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          totalPages: Math.ceil(totalCount / limit)
+        }
+      };
+    } catch (error) {
+      console.error('[ArticleService] Error in getArticlesPaginated:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get popular (non-highlighted) articles with pagination
+   */
+  async getPopularArticlesPaginated(page = 1, limit = 6) {
+    try {
+      const offset = (page - 1) * limit;
+
+      // Get non-highlighted articles and total count
+      const [articles, totalCount] = await Promise.all([
+        articleRepository.getNonHighlightedArticles(limit, offset),
+        articleRepository.getNonHighlightedArticlesCount()
+      ]);
+
+      // Encode article_id to hashid
+      const articlesWithHashId = articles.map(article => ({
+        ...article,
+        id: encode(article.article_id)
+      }));
+
+      return {
+        data: articlesWithHashId,
+        pagination: {
+          page,
+          limit,
+          total: totalCount,
+          totalPages: Math.ceil(totalCount / limit)
+        }
+      };
+    } catch (error) {
+      console.error('[ArticleService] Error in getPopularArticlesPaginated:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Get highlighted articles (for hero section)
+   */
+  async getHighlightedArticles(limit = 5) {
+    try {
+      const articles = await articleRepository.getHighlightedArticles(limit);
+
+      // Encode article_id to hashid
+      const articlesWithHashId = articles.map(article => ({
+        ...article,
+        id: encode(article.article_id)
+      }));
+
+      return {
+        success: true,
+        data: articlesWithHashId
+      };
+    } catch (error) {
+      console.error('[ArticleService] Error in getHighlightedArticles:', error);
+      throw error;
+    }
+  },
+
+  /**
    * Get article by hashid
    */
   async getArticleByHashId(hashId) {

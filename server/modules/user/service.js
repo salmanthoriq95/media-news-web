@@ -76,5 +76,102 @@ export default {
       console.error('[UserService] Error in getAllUsers:', error);
       throw error;
     }
+  },
+
+  /**
+   * Update user
+   */
+  async updateUser(userId, name, email, photo, password = null) {
+    try {
+      // Check if user exists
+      const existingUser = await userRepository.findById(userId);
+
+      if (!existingUser) {
+        return {
+          success: false,
+          message: 'User tidak ditemukan'
+        };
+      }
+
+      // Check if email is being changed and already exists
+      if (email !== existingUser.email) {
+        const emailExists = await userRepository.findByEmail(email);
+        if (emailExists) {
+          return {
+            success: false,
+            message: 'Email sudah digunakan oleh user lain'
+          };
+        }
+      }
+
+      // Prepare update data
+      const updateData = {
+        name,
+        email,
+        photo: photo || null
+      };
+
+      // Hash password if provided
+      if (password) {
+        const saltRounds = parseInt(process.env.BCRYPT_SALT_ROUNDS) || 10;
+        updateData.password = await bcrypt.hash(password, saltRounds);
+      }
+
+      // Update user
+      const updatedUser = await userRepository.updateUser(userId, updateData);
+
+      return {
+        success: true,
+        message: 'User berhasil diupdate',
+        data: updatedUser
+      };
+    } catch (error) {
+      console.error('[UserService] Error in updateUser:', error);
+      throw error;
+    }
+  },
+
+  /**
+   * Delete user
+   */
+  async deleteUser(userId) {
+    try {
+      // Check if user exists
+      const existingUser = await userRepository.findById(userId);
+
+      if (!existingUser) {
+        return {
+          success: false,
+          message: 'User tidak ditemukan'
+        };
+      }
+
+      // Check total users - prevent deleting last user
+      const totalUsers = await userRepository.countUsers();
+      if (totalUsers <= 1) {
+        return {
+          success: false,
+          message: 'Tidak dapat menghapus user terakhir'
+        };
+      }
+
+      // Delete user
+      const deleted = await userRepository.deleteUser(userId);
+
+      if (!deleted) {
+        return {
+          success: false,
+          message: 'Gagal menghapus user'
+        };
+      }
+
+      return {
+        success: true,
+        message: 'User berhasil dihapus'
+      };
+    } catch (error) {
+      console.error('[UserService] Error in deleteUser:', error);
+      throw error;
+    }
   }
 };

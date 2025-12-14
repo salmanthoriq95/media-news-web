@@ -44,3 +44,62 @@ export const createUserSchema = Joi.object({
       'any.invalid': 'Email mengandung karakter yang tidak diizinkan'
     })
 });
+
+export const updateUserSchema = Joi.object({
+  name: Joi.string()
+    .min(3)
+    .max(255)
+    .trim()
+    .custom((value, helpers) => {
+      // Sanitize name input
+      const sanitized = sanitizeString(value);
+      // Check for dangerous patterns
+      if (/<script|javascript:|onerror=/i.test(value)) {
+        return helpers.error('any.invalid');
+      }
+      return sanitized;
+    })
+    .required()
+    .messages({
+      'string.min': 'Nama minimal 3 karakter',
+      'string.max': 'Nama maksimal 255 karakter',
+      'any.required': 'Nama wajib diisi',
+      'any.invalid': 'Nama mengandung karakter yang tidak diizinkan'
+    }),
+  email: Joi.string()
+    .email()
+    .max(255)
+    .trim()
+    .lowercase()
+    .custom((value, helpers) => {
+      if (!isValidEmail(value)) {
+        return helpers.error('any.invalid');
+      }
+      return value;
+    })
+    .required()
+    .messages({
+      'string.email': 'Email harus valid',
+      'string.max': 'Email terlalu panjang',
+      'any.required': 'Email wajib diisi',
+      'any.invalid': 'Email mengandung karakter yang tidak diizinkan'
+    }),
+  photo: Joi.string()
+    .max(500)
+    .allow(null, '')
+    .optional()
+    .messages({
+      'string.max': 'URL foto terlalu panjang'
+    }),
+  password: Joi.string()
+    .min(8)
+    .max(255)
+    .pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>])[A-Za-z\d!@#$%^&*(),.?":{}|<>]{8,}$/)
+    .allow(null, '')
+    .optional()
+    .messages({
+      'string.min': 'Password minimal 8 karakter',
+      'string.max': 'Password terlalu panjang',
+      'string.pattern.base': 'Password harus mengandung huruf besar, huruf kecil, angka, dan simbol'
+    })
+});
