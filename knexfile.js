@@ -29,12 +29,16 @@ module.exports = {
     client: 'mysql2',
     connection: {
       host: process.env.DB_HOST,
-      port: parseInt(process.env.DB_PORT),
+      port: parseInt(process.env.DB_PORT) || 3306,
       user: process.env.DB_USER,
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       charset: 'utf8mb4',
-      timezone: '+07:00'
+      timezone: '+07:00',
+      // SSL required for PlanetScale
+      ssl: {
+        rejectUnauthorized: true
+      }
     },
     migrations: {
       directory: './database/migrations',
