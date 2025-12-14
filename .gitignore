@@ -34,6 +34,8 @@ sessions/
 # User uploaded files (may contain sensitive documents)
 public/uploads/*
 !public/uploads/.gitkeep
+!public/uploads/favico.png
+!public/uploads/logo.png
 
 # Backup files (may contain sensitive data)
 *.backup
