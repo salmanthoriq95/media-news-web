@@ -29,7 +29,7 @@ export default defineNuxtConfig({
   },
 
   nitro: {
-    preset: 'vercel',
+    preset: 'node-server',
     storage: {
       sessions: {
         driver: 'memory'
