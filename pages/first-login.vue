@@ -58,11 +58,11 @@
             <div class="mt-2 text-xs text-gray-600 space-y-1">
               <p class="font-medium">Password harus mengandung:</p>
               <ul class="list-disc list-inside space-y-1 ml-2">
-                <li :class="form.newPassword.length >= 8 ? 'text-green-600' : 'text-gray-500'">Minimal 8 karakter</li>
-                <li :class="/[a-z]/.test(form.newPassword) ? 'text-green-600' : 'text-gray-500'">Huruf kecil (a-z)</li>
-                <li :class="/[A-Z]/.test(form.newPassword) ? 'text-green-600' : 'text-gray-500'">Huruf besar (A-Z)</li>
-                <li :class="/[0-9]/.test(form.newPassword) ? 'text-green-600' : 'text-gray-500'">Angka (0-9)</li>
-                <li :class="/[!@#$%^&*(),.?\":{}|<>]/.test(form.newPassword) ? 'text-green-600' : 'text-gray-500'">Simbol (!@#$%^&* dll)</li>
+                <li :class="passwordValidation.hasMinLength ? 'text-green-600' : 'text-gray-500'">Minimal 8 karakter</li>
+                <li :class="passwordValidation.hasLowerCase ? 'text-green-600' : 'text-gray-500'">Huruf kecil (a-z)</li>
+                <li :class="passwordValidation.hasUpperCase ? 'text-green-600' : 'text-gray-500'">Huruf besar (A-Z)</li>
+                <li :class="passwordValidation.hasNumber ? 'text-green-600' : 'text-gray-500'">Angka (0-9)</li>
+                <li :class="passwordValidation.hasSymbol ? 'text-green-600' : 'text-gray-500'">Simbol (!@#$%^&* dll)</li>
               </ul>
             </div>
           </div>
@@ -138,6 +138,17 @@ const loading = ref(false)
 const errorMessage = ref('')
 const showNewPassword = ref(false)
 const showConfirmPassword = ref(false)
+
+const passwordValidation = computed(() => {
+  const password = form.value.newPassword
+  return {
+    hasMinLength: password.length >= 8,
+    hasLowerCase: /[a-z]/.test(password),
+    hasUpperCase: /[A-Z]/.test(password),
+    hasNumber: /[0-9]/.test(password),
+    hasSymbol: /[!@#$%^&*(),.?":{}|<>]/.test(password)
+  }
+})
 
 const validatePassword = (password) => {
   if (password.length < 8) {
