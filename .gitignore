@@ -13,7 +13,6 @@
 !.env.example
 
 # Database credentials and backups
-database/db.js
 *.sql
 *.sqlite
 *.sqlite3
